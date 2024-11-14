@@ -1,5 +1,6 @@
 # 24 October 2024
 # testing metagear
+### PULL > STAGE > COMMIT > PUSH ###
 
 library(metagear)
 library(dplyr)
@@ -85,11 +86,31 @@ write.csv(df_Sarah, "/Users/Sarah/Desktop/Interdisciplinary-Ecology/df_Sarah.csv
 quin_df <- read.csv("df_quin.csv")
 kristen_df <- read.csv("df_Kristen.csv")
 
+# remove extraneous column X
 quin_df1 <- quin_df %>% select(-X)
 kristen_df1 <- kristen_df %>% select(-X)
 
 combined_screen <- rbind(df_Sarah, quin_df1, kristen_df1)
 write.csv(combined_screen, "combined_screen.csv")
+
+# explore data
+length(which(combined_screen$INCLUDE == "YES")) # 72
+length(which(combined_screen$INCLUDE == "NO")) # 2664
+length(which(combined_screen$INCLUDE == "maybe")) # 141
+
+# change maybes to YES/NO
+# Study ID 22 is NO
+# Study ID 67 is NO
+# Study ID 84 is NO
+# Study ID 108 is YES
+# Study ID 385 is NO
+# Study ID 103 is NO
+
+combined_file_edited <- combined_screen %>%  
+  mutate(INCLUDE = case_when( STUDY_ID %in% c(22, 67, 84, 385, 103) ~ "NO",  TRUE ~ INCLUDE))
+
+combined_file_edited <- combined_screen %>%  
+  mutate(INCLUDE = case_when( STUDY_ID %in% c(108) ~ "YES",  TRUE ~ INCLUDE))
 
 
 
