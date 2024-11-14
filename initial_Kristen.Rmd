@@ -1,0 +1,45 @@
+---
+title: "OCt24"
+author: "Kristen"
+date: "2024-10-24"
+output: html_document
+---
+
+```{r}
+library(metagear)
+library(readr)
+interpapers <- read_csv("interpapers.csv")
+str(papersinter)
+```
+
+```{r}
+References_Screening_Ready <- effort_initialize(interpapers)
+theTeam<- c("Kristen1", "Kristen2", "Kristen3")
+
+#Randomly delegate screening
+References_unscreened <- effort_distribute(References_Screening_Ready, reviewers=theTeam, save_split=TRUE)
+
+
+metagear::abstract_screener(file=file.choose("interpapers.csv"),
+                            aReviewer = "Kristen3" ,
+                            reviewerColumnName = "REVIEWERS",
+                            unscreenedColumnName = "INCLUDE",
+                            unscreenedValue = "not vetted",
+                            abstractColumnName = "Abstract",
+                            titleColumnName =  "Article.Title" ,
+                            browserSearch = "https://www.google.com/search?q=",
+                            fontSize = 13,
+                            windowWidth = 70,
+                            windowHeight = 16,
+                            theButtons = c("YES","maybe","NO"),
+                            keyBindingToButtons = c("y","m","n"),
+                            buttonSize = 10,
+                            highlightColor = "powderblue",
+                            highlightKeywords = c("interdisci*", "ecolog*"))
+
+```
+
+```{r}
+df_Kristen<-rbind(effort_Kristen1, effort_Kristen2, effort_Kristen3)
+```
+
