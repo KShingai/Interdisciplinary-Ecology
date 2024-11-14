@@ -105,11 +105,28 @@ length(which(combined_screen$INCLUDE == "maybe")) # 141
 # Study ID 385 is NO
 # Study ID 103 is NO
 
-combined_file_edited <- combined_screen %>%  
+# study IDs are not unique, so extract only Sarah's papers
+combined_screen_sarah <- combined_screen %>% filter(REVIEWERS==c("Sarah1", "Sarah2", "Sarah3"))
+# change to NO
+combined_file_edited <- combined_screen_sarah %>%  
   mutate(INCLUDE = case_when( STUDY_ID %in% c(22, 67, 84, 385, 103) ~ "NO",  TRUE ~ INCLUDE))
-
-combined_file_edited <- combined_screen %>%  
+# change to YES
+combined_file_edited <- combined_screen_sarah %>%  
   mutate(INCLUDE = case_when( STUDY_ID %in% c(108) ~ "YES",  TRUE ~ INCLUDE))
+
+# help Kristen change her maybes in combined_screen to YES/NO
+# IDs 115-287
+# change to YES: 115, 116, 117, 142, 147, 181 
+# change to NO: 122, 125, 126, 136, 159, 174, 179, 183, 184, 186, 187, 188, 193, 197, 210, 
+  # 217, 219, 225, 226 (no, but), 233, 250, 270, 287
+combined_screen_kristen <- combined_screen %>% filter(REVIEWERS==c("Kristen1", "Kristen2", "Kristen3"))
+# change to NO
+combined_file_edited_k <- combined_screen_kristen %>%  
+  mutate(INCLUDE = case_when( STUDY_ID %in% c(122, 125, 126, 136, 159, 174, 179, 183, 184, 186, 187, 188, 193, 197, 210, 
+                                              217, 219, 225, 226, 233, 250, 270, 287) ~ "NO",  TRUE ~ INCLUDE))
+# change to YES
+combined_file_edited_k <- combined_screen_kristen %>%  
+  mutate(INCLUDE = case_when( STUDY_ID %in% c(115, 116, 117, 142, 147, 181) ~ "YES",  TRUE ~ INCLUDE))
 
 
 
