@@ -5,7 +5,6 @@ library(metagear)
 library(readr)
 library(BiocManager)
 install.packages("metagear", dependencies = TRUE)
-remove.packages("metagear")
 BiocManager::install("EBImage", force=T)
 install.packages("metagear_0.7.tar.gz", repos = "http://cran.us.r-project.org", type = "source", dependencies = TRUE)
 
