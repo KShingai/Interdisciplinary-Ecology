@@ -9,7 +9,7 @@ output: html_document
 library(metagear)
 library(readr)
 interpapers <- read_csv("interpapers.csv")
-str(papersinter)
+
 ```
 
 ```{r}
