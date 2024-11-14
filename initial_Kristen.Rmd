@@ -9,7 +9,7 @@ output: html_document
 library(metagear)
 library(readr)
 interpapers <- read_csv("interpapers.csv")
-str(papersinter)
+
 ```
 
 ```{r}
@@ -41,5 +41,10 @@ metagear::abstract_screener(file=file.choose("interpapers.csv"),
 
 ```{r}
 df_Kristen<-rbind(effort_Kristen1, effort_Kristen2, effort_Kristen3)
+write.csv(df_Kristen, "df_Kristen.csv")
+```
+
+```{r}
+combined_screen <- read_csv("combined_screen.csv")
 ```
 
