@@ -2,6 +2,7 @@
 # testing metagear
 
 library(metagear)
+library(dplyr)
 library(readr)
 library(BiocManager)
 install.packages("metagear", dependencies = TRUE)
@@ -76,7 +77,20 @@ metagear::abstract_screener(file=file.choose("savedrecs1.csv"),
 Sarah1 <- read.csv("/Users/Sarah/Desktop/Interdisciplinary-Ecology/Effort_Sarah1.csv")
 Sarah2 <- read.csv("/Users/Sarah/Desktop/Interdisciplinary-Ecology/Effort_Sarah2.csv")
 Sarah3 <- read.csv("/Users/Sarah/Desktop/Interdisciplinary-Ecology/Effort_Sarah3.csv")
-
 df_Sarah <- rbind(Sarah1, Sarah2, Sarah3)
+
+# combining Sarah, Kristen, and Quin's dfs
+write.csv(df_Sarah, "/Users/Sarah/Desktop/Interdisciplinary-Ecology/df_Sarah.csv")
+
+quin_df <- read.csv("df_quin.csv")
+kristen_df <- read.csv("df_Kristen.csv")
+
+quin_df1 <- quin_df %>% select(-X)
+kristen_df1 <- kristen_df %>% select(-X)
+
+combined_screen <- rbind(df_Sarah, quin_df1, kristen_df1)
+write.csv(combined_screen, "combined_screen.csv")
+
+
 
 
