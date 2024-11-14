@@ -39,12 +39,8 @@ metagear::abstract_screener(file=file.choose("lit_search.csv"),
                             highlightColor = "powderblue",
                             highlightKeywords = c("plant", "feedback"))
 
-##reading in vetted csv files and combining
-quin <- data.frame(read.csv("effort_quin.csv", header = T))
-quinifer <- data.frame(read.csv("effort_quinifer", header = T))
-quindelyn <- data.frame(read.csv("effort_quindelyn.csv", header =T))
+
 
 
 ##combining
-
 df_quin <- rbind(effort_quin, effort_quindelyn, effort_quinifer)
