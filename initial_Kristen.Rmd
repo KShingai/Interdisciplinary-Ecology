@@ -9,6 +9,8 @@ output: html_document
 library(metagear)
 library(readr)
 interpapers <- read_csv("interpapers.csv")
+library(tidyr)
+library(dplyr)
 
 ```
 
@@ -37,6 +39,7 @@ metagear::abstract_screener(file=file.choose("interpapers.csv"),
                             highlightColor = "powderblue",
                             highlightKeywords = c("interdisci*", "ecolog*"))
 
+
 ```
 
 ```{r}
@@ -46,5 +49,24 @@ write.csv(df_Kristen, "df_Kristen.csv")
 
 ```{r}
 combined_screen <- read_csv("combined_screen.csv")
+```
+```{r}
+#was maybe now no 17, 43, 51, 81, 189, 410, 446,  104, 134, 776, 256,258, 7,  287, 293, 296, 301, 304, 310, 320, 322, 323, 328, 333, 350, 351, 353, 371, 375, 380, 400, 410, 437, 444, 446, 449, 450, 500, 519, 554, 564, 565, 569, 600, 865, 905
+# was maybe now yes 80, 85, 86,  351, 156, 191, 5, 8, 292
+# no but 474, 208, 289, 474, 479, 499, 613, 776
+
+combined_file_edited <- combined_screen %>% 
+  mutate(INCLUDE = case_when(
+    STUDY_ID %in% c(22, 67, 84, 385, 103, 
+                    17, 43, 51, 81, 189, 410, 446, 104, 134, 776, 256, 258, 7, 
+                    287, 293, 296, 301, 304, 310, 320, 322, 323, 328, 333, 350, 
+                    351, 353, 371, 375, 380, 400, 410, 437, 444, 446, 449, 450, 
+                    500, 519, 554, 564, 565, 569, 600, 865, 905, 474, 208, 289, 
+                    474, 479, 499, 613, 776) ~ "NO",
+    STUDY_ID %in% c(80, 85, 86, 351, 156, 191, 5, 8, 292) ~ "YES",
+    INCLUDE == "MAYBE" ~ "NO",  # Remaining "MAYBE" values change to "NO"
+    TRUE ~ INCLUDE
+  ))
+
 ```
 
