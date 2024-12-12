@@ -106,13 +106,21 @@ length(which(combined_screen$INCLUDE == "maybe")) # 141
 # Study ID 103 is NO
 
 # study IDs are not unique, so extract only Sarah's papers
-combined_screen_sarah <- combined_screen %>% filter(REVIEWERS==c("Sarah1", "Sarah2", "Sarah3"))
+#combined_screen_sarah <- combined_screen %>% filter(REVIEWERS==c("Sarah1", "Sarah2", "Sarah3"))
+#combined_screen_NOTsarah <- combined_screen %>% filter(REVIEWERS!=c("Sarah1", "Sarah2", "Sarah3")) # get all non-Sarah
 # change to NO
-combined_file_edited <- combined_screen_sarah %>%  
+#combined_file_edited <- combined_screen_sarah %>%  
+ # mutate(INCLUDE = case_when( STUDY_ID %in% c(22, 67, 84, 385, 103) ~ "NO",  TRUE ~ INCLUDE))
+combined_file_edited_s <- df_Sarah %>% 
   mutate(INCLUDE = case_when( STUDY_ID %in% c(22, 67, 84, 385, 103) ~ "NO",  TRUE ~ INCLUDE))
 # change to YES
-combined_file_edited <- combined_screen_sarah %>%  
+#combined_file_edited <- combined_screen_sarah %>%  
+ # mutate(INCLUDE = case_when( STUDY_ID %in% c(108) ~ "YES",  TRUE ~ INCLUDE))
+combined_file_edited_s <- df_Sarah %>%
   mutate(INCLUDE = case_when( STUDY_ID %in% c(108) ~ "YES",  TRUE ~ INCLUDE))
+
+# merge Sarah and non-Sarah
+#all_Sarah <- rbind(combined_file_edited, combined_screen_NOTsarah)
 
 # help Kristen change her maybes in combined_screen to YES/NO
 # IDs 115-287
@@ -120,6 +128,7 @@ combined_file_edited <- combined_screen_sarah %>%
 # change to NO: 122, 125, 126, 136, 159, 174, 179, 183, 184, 186, 187, 188, 193, 197, 210, 
   # 217, 219, 225, 226 (no, but), 233, 250, 270, 287
 combined_screen_kristen <- combined_screen %>% filter(REVIEWERS==c("Kristen1", "Kristen2", "Kristen3"))
+combined_screen_NOTkristen <- combined_screen %>% filter(REVIEWERS!=c("Kristen1", "Kristen2", "Kristen3")) # all non-Kristen, BUT SOME KRISTEN STILL THERE?
 # change to NO
 combined_file_edited_k <- combined_screen_kristen %>%  
   mutate(INCLUDE = case_when( STUDY_ID %in% c(122, 125, 126, 136, 159, 174, 179, 183, 184, 186, 187, 188, 193, 197, 210, 
@@ -127,6 +136,42 @@ combined_file_edited_k <- combined_screen_kristen %>%
 # change to YES
 combined_file_edited_k <- combined_screen_kristen %>%  
   mutate(INCLUDE = case_when( STUDY_ID %in% c(115, 116, 117, 142, 147, 181) ~ "YES",  TRUE ~ INCLUDE))
+
+# merge Kristen and non-Kristen from Sarah
+all_Kristen <- rbind(combined_file_edited_k, combined_screen_NOTkristen)
+
+# merge edited Sarah and Kristen done by Sarah
+all_S_and_K <- rbind(all_Kristen, all_Sarah) # duplicates
+
+
+# get edited Quin and Kristen
+Kristen_updated_new <- read.csv("combined_file_edited_Kristen.csv") # ALL Kristen
+Quin_updated_new_k <- read.csv("combined_screen_quin_final.csv") # just Kristen's updated from Quin
+Quin_updated_new_all <- read.csv("combined_quin_df.csv") # ALL Quin
+
+# merge all
+# Only Sarah's: combined_file_edited_s, 983x75
+# Only Kristen's: Kristen_updated_new, 908x75
+# Only Quin's:
+# Sarah's edits on Kristen's: only 302x75
+# Quin's edits on Kristen's:
+
+
+
+
+
+
+# data cleaner
+install.packages("datacleanr")
+library(datacleanr)
+datacleanr::dcr_app(all_Sarah)
+
+install.packages("librarian")
+librarian::shelf(datacleanr, ggplot2, dplyr, tidyverse) # load all packages at once
+install.packages("pacman")
+pacman::p_load(datacleanr, ggplot2, dplyr, tidyverse) # load all packages at once
+
+
 
 
 
